@@ -1,0 +1,11 @@
+transaction_id,customer_id,product_id,amount,transaction_date,status
+101,1,1001,150.50,2024-01-15,completed
+102,2,1002,250.00,2024-01-16,completed
+103,3,1003,-50.00,2024-01-17,completed
+104,4,1001,75.25,2024-01-18,completed
+105,1,1004,,2024-01-19,pending
+106,5,1002,200.00,2024-01-20,completed
+107,6,1005,-25.50,2024-01-21,completed
+108,7,1003,300.00,2024-01-22,completed
+109,8,1001,120.75,2024-01-23,completed
+110,2,1004,0.00,2024-01-24,completed

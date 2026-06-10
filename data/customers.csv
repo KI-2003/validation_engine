@@ -1,0 +1,11 @@
+customer_id,name,email,phone,registration_date
+1,John Smith,john.smith@email.com,555-0101,2023-01-15
+2,Jane Doe,jane.doe@email.com,555-0102,2023-01-20
+3,Bob Johnson,,555-0103,2023-02-01
+4,Alice Williams,alice@email.com,555-0104,2023-02-05
+1,John Smith,j.smith@email.com,555-0105,2023-02-10
+5,Charlie Brown,charlie.b@email.com,,2023-02-15
+6,Diana Prince,diana.prince@email.com,555-0106,2023-02-20
+7,Eve Wilson,,555-0107,2023-03-01
+8,Frank Miller,frank@email.com,555-0108,2023-03-05
+2,Jane Doe,jane.d@email.com,555-0109,2023-03-10

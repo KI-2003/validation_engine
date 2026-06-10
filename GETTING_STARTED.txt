@@ -1,0 +1,276 @@
+VALIDATION ENGINE - GETTING STARTED GUIDE
+==========================================
+
+🎯 OBJECTIVE
+Build a proof-of-concept data validation tool that uses natural language to query and validate data.
+
+📋 WHAT YOU GET
+- A Streamlit web application for data validation
+- Local LLM integration with Ollama (no API costs)
+- SQL query generation and validation
+- Automatic CSV loading from data/ folder
+- Business-friendly result explanations
+- Sample datasets with intentional data quality issues
+
+✨ KEY FEATURES
+✓ Natural language queries
+✓ Automatic schema detection
+✓ SQL validation and safety checks
+✓ Results with LLM-generated explanations
+✓ No cloud dependencies - runs entirely offline
+✓ Fast DuckDB queries
+✓ Modular, well-documented code
+
+🚀 5-MINUTE SETUP
+
+1. INSTALL OLLAMA
+   Visit: https://ollama.ai
+   After installation, download the model:
+   > ollama pull llama3.1:8b
+
+2. OPEN TERMINAL IN validation_engine FOLDER
+
+3. CREATE VIRTUAL ENVIRONMENT
+   Windows:  python -m venv .venv && .venv\Scripts\activate
+   Mac/Linux: python3 -m venv .venv && source .venv/bin/activate
+
+4. INSTALL DEPENDENCIES
+   > pip install -r requirements.txt
+
+5. START TWO TERMINALS
+
+   Terminal 1 (Ollama):
+   > ollama serve
+
+   Terminal 2 (App):
+   > python run.py
+   
+   Browser opens at http://localhost:8501
+
+📚 EXAMPLE VALIDATION REQUESTS
+
+Try asking:
+- "Check for duplicate customer IDs"
+- "Find records with missing emails"
+- "Show transactions with negative amounts"
+- "Count total customers"
+- "List products by category"
+- "Find null values in the transactions table"
+- "Show the average transaction amount"
+
+🗂️ PROJECT FILES EXPLAINED
+
+app.py
+├─ Main Streamlit application
+├─ Handles user interface
+├─ Processes validation requests end-to-end
+└─ Displays results with explanations
+
+database/
+├─ duckdb_manager.py
+│  ├─ Loads CSV files automatically
+│  ├─ Provides database schema
+│  ├─ Executes SQL queries
+│  └─ Returns results as DataFrames
+
+llm/
+├─ ollama_client.py
+│  ├─ Connects to Ollama service
+│  ├─ Generates SQL from natural language
+│  ├─ Creates result explanations
+│  └─ Handles model management
+
+validators/
+├─ sql_validator.py
+│  ├─ Validates SQL syntax
+│  ├─ Checks table references
+│  ├─ Checks column references
+│  └─ Rejects unsafe queries
+
+prompts/
+├─ templates.py
+│  ├─ SQL generation prompts
+│  ├─ Explanation prompts
+│  ├─ Metadata prompts
+│  └─ Prompt formatting utilities
+
+config.py
+├─ Configuration settings
+├─ Model paths
+├─ Logging setup
+└─ Default parameters
+
+data/
+├─ customers.csv (sample data with issues)
+├─ transactions.csv (sample data with issues)
+└─ products.csv (clean reference data)
+
+💡 HOW IT WORKS
+
+STEP-BY-STEP PROCESS:
+
+1. User enters natural language request
+   "Check for duplicate customer IDs"
+   
+2. System retrieves database schema
+   Tables: customers, transactions, products
+   Columns for each table
+   
+3. LLM generates SQL query
+   SELECT customer_id, COUNT(*) as count 
+   FROM customers 
+   GROUP BY customer_id 
+   HAVING count > 1
+   
+4. SQL Validator checks the query
+   ✓ Is it a SELECT? Yes
+   ✓ Known tables? Yes (customers)
+   ✓ Known columns? Yes (customer_id)
+   ✓ Safe? Yes
+   
+5. Query executed on DuckDB
+   Returns duplicate customer IDs
+   
+6. LLM generates explanation
+   "Found 2 duplicate customer IDs in the database..."
+   
+7. Results displayed to user
+   Table with results
+   Business-friendly explanation
+
+⚙️ CONFIGURATION
+
+Create a .env file to customize:
+
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=llama3.1:8b
+LOG_LEVEL=INFO
+
+Or use .env.example as a template.
+
+🐛 TROUBLESHOOTING
+
+PROBLEM: "Cannot connect to Ollama"
+SOLUTION: 
+  1. Make sure Ollama is running (ollama serve)
+  2. Check http://localhost:11434/api/tags in browser
+  3. If using different port, update .env file
+
+PROBLEM: "Model not found"
+SOLUTION:
+  1. Run: ollama pull llama3.1:8b
+  2. Wait for download to complete (2-5 minutes)
+  3. Restart the application
+
+PROBLEM: "ModuleNotFoundError: No module named..."
+SOLUTION:
+  1. Make sure virtual environment is activated
+  2. Run: pip install -r requirements.txt
+  3. Check Python version is 3.8+
+
+PROBLEM: "No CSV files found"
+SOLUTION:
+  1. Check that CSV files are in data/ folder
+  2. Verify file permissions
+  3. Ensure CSV format (comma-separated, UTF-8)
+
+PROBLEM: "Application runs slow"
+SOLUTION:
+  1. First run takes longer (model loading)
+  2. Ensure 4GB+ RAM available
+  3. Close other applications
+  4. Check Ollama resource usage
+
+📊 SAMPLE DATA ISSUES
+
+The included sample data has intentional quality issues:
+
+customers.csv:
+  ✗ Duplicate customer IDs (1, 2)
+  ✗ Missing emails (rows 3, 7)
+  ✗ Missing phone numbers (row 5)
+
+transactions.csv:
+  ✗ Negative amounts (rows 3, 7)
+  ✗ Null/missing values (row 5)
+  ✗ Zero amounts (row 10)
+
+products.csv:
+  ✓ Clean reference data (no issues)
+
+These issues help demonstrate validation capabilities.
+
+🔐 ADDING YOUR OWN DATA
+
+1. Create CSV files in data/ folder
+   Format: comma-separated, first row = headers
+   
+2. Ensure CSV format:
+   - UTF-8 encoding
+   - Comma separators
+   - No special characters in filenames
+   
+3. Restart application
+   (CSV files auto-load on startup)
+
+Example CSV:
+  id,name,value,date
+  1,John,100,2024-01-01
+  2,Jane,200,2024-01-02
+
+🎓 LEARNING RESOURCES
+
+Ollama: https://ollama.ai/docs
+  - Local LLM setup and usage
+  - Model management
+  - API reference
+
+DuckDB: https://duckdb.org/docs
+  - Fast SQL analytics
+  - In-process database
+  - Data import/export
+
+Streamlit: https://docs.streamlit.io
+  - Web app development
+  - Components and widgets
+  - Deployment options
+
+sqlglot: https://github.com/tobymao/sqlglot
+  - SQL parsing and validation
+  - Multi-dialect support
+  - Query optimization
+
+🚀 NEXT STEPS TO EXTEND
+
+1. Add authentication for multi-user access
+2. Save validation histories to database
+3. Create scheduled validation jobs
+4. Add data quality metrics tracking
+5. Build custom validation rules
+6. Export results to CSV/PDF
+7. Create dashboards with historical trends
+8. Add more data source types (databases, APIs)
+
+✅ CHECKLIST BEFORE RUNNING
+
+Before starting, ensure:
+☑ Python 3.8+ installed
+☑ Ollama installed and model downloaded
+☑ Virtual environment created and activated
+☑ Requirements installed (pip install -r requirements.txt)
+☑ CSV files in data/ folder
+☑ Ollama service running (ollama serve)
+☑ No port conflicts on 8501 (Streamlit)
+☑ Internet access (for first-time package downloads)
+☑ 4GB+ RAM available
+☑ ~2GB free disk space
+
+🎉 YOU'RE READY!
+
+Run: python run.py
+
+Your validation agent should be ready to use in seconds!
+
+Questions? Check README.md for comprehensive documentation.
+
+Happy Validating! 🔍
