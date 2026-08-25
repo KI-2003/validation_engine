@@ -491,3 +491,15 @@ For issues or questions:
 ---
 
 **Happy Validating! 🚀**
+
+
+
+<img width="1920" height="836" alt="Screenshot 2026-08-25 at 19-59-36 Validation Agent" src="https://github.com/user-attachments/assets/e8375706-32f4-4097-b56d-58116e0e86d0" />
+
+<img width="1920" height="836" alt="Screenshot 2026-08-25 at 20-00-43 Validation Agent" src="https://github.com/user-attachments/assets/ab37fa60-c83c-4763-b589-581c32fad2c7" />
+
+<img width="1920" height="836" alt="Screenshot 2026-08-25 at 20-01-11 Validation Agent" src="https://github.com/user-attachments/assets/4e331bd4-4903-4d79-99c4-2e009c15d261" />
+
+<img width="1920" height="836" alt="Screenshot 2026-08-25 at 20-01-58 Validation Agent" src="https://github.com/user-attachments/assets/79941e40-509f-479e-9f99-2add67053473" />
+
+
